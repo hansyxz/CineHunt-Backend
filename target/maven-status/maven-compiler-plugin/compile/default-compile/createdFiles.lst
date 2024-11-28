@@ -1,0 +1,11 @@
+br\com\cinehunt\Main.class
+br\com\cinehunt\service\JsonTransformer.class
+br\com\cinehunt\service\DataProcessor$1.class
+br\com\cinehunt\models\Movie.class
+br\com\cinehunt\models\Series.class
+br\com\cinehunt\handler\SearchHandler.class
+br\com\cinehunt\models\Entertainment.class
+br\com\cinehunt\api\ApiClient.class
+br\com\cinehunt\service\DataProcessor.class
+br\com\cinehunt\service\SearchService.class
+br\com\cinehunt\util\EntertainmentData.class
