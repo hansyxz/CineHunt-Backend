@@ -24,27 +24,13 @@ public class SearchHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            // Adicionando logs para depuração
-            System.out.println("Requisição recebida: " + exchange.getRequestURI());
-            System.out.println("Método: " + exchange.getRequestMethod());
-
-            // Cabeçalhos CORS completos
-            Headers headers = exchange.getResponseHeaders();
-            headers.add("Content-Type", "application/json");
-            headers.add("Access-Control-Allow-Origin", "*");  // Permite todas as origens
-            headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");  // Métodos permitidos
-            headers.add("Access-Control-Allow-Headers", "Content-Type, api_key");  // Cabeçalhos permitidos
-
-            // Resposta para as requisições OPTIONS (pré-vôo CORS)
-            if ("OPTIONS".equals(exchange.getRequestMethod())) {
-                System.out.println("Respondendo à requisição OPTIONS");
-                exchange.sendResponseHeaders(200, -1); // Resposta de pre-flight
-                return;
-            }
-
-            // Tratando requisição GET
             if ("GET".equals(exchange.getRequestMethod())) {
+                Headers headers = exchange.getResponseHeaders();
+                headers.add("Content-Type", "application/json");
+                headers.add("Access-Control-Allow-Origin", "*");
+
                 String query = exchange.getRequestURI().getQuery();
+
                 String searchTerm = query != null && query.contains("=") ? query.substring(query.indexOf('=') + 1) : "";
                 JsonArray response = processSearch(searchTerm);
 
@@ -57,9 +43,6 @@ public class SearchHandler implements HttpHandler {
             sendErrorResponse(exchange, 500, "");
         }
     }
-
-
-
 
     private void sendErrorResponse(HttpExchange exchange, int statusCode, String message) throws IOException {
         exchange.sendResponseHeaders(statusCode, message.getBytes(StandardCharsets.UTF_8).length);
